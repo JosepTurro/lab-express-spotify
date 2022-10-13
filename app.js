@@ -15,8 +15,8 @@ app.use(express.static(__dirname + '/public'));
 
 // setting the spotify-api goes here:
 const spotifyApi = new SpotifyWebApi({
-    clientId:  "c0b744696878458e82a21b47d7bece7b",//process.env.CLIENT_ID,
-    clientSecret: "10c13e45cf104a7296d8679a4172b2a1",//process.env.CLIENT_SECRET
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET
   });
 spotifyApi
 .clientCredentialsGrant()
@@ -29,11 +29,12 @@ app.get("/", (req,res,next)=>{
 })
 
 app.get("/artist-search", (req, res, next) => {
-  // console.log("req.query: ", req.query)
+   console.log("req.query: ", req.query)
   spotifyApi.searchArtists(req.query.artist)
   .then(resultats =>  {
            console.log('Nom artista', resultats.body.artists.items[1].name);
            console.log('Artist albums', resultats.body.artists.items); // aquest es el que volem
+           
            //console.log('Length arr: ', resultats.body.artists.items.length)
           //console.log('resultats: ', resultats)
          
